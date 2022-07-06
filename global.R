@@ -21,15 +21,15 @@ library(htmltools)
 #   name = c("reviewer", "User Two")
 # )
 
-
-readfile <- read.csv("data/AraCLIM_FINAL_CLIMools_V2.csv",row.names = NULL)
+#SORGHUM_CLIMATES.csv
+readfile <- read.csv("data/SORGHUM_CLIMATES.csv",row.names = NULL)
 readfile2 <- read.csv("data/datadescriptionc.csv",row.names = NULL)
-
-FULL.val <-read.csv("data/AraCLIM_FINAL_CLIMools_V2.csv")
+#AraCLIM_FINAL_CLIMools_V2
+FULL.val <-read.csv("data/SORGHUM_CLIMATES.csv")
 class(FULL.val)  
 na.omit(FULL.val)
-
-vlc <- read.delim("data/variable_label_categoryb.txt", header = FALSE, sep = "\t")
+#variable_label_categorybDirectSorg.txt
+vlc <- read.delim("data/variable_label_categorybDirectSorg.txt", header = FALSE, sep = "\t")
 colnames(FULL.val) <- vlc[,2]
 cats <- read.delim("data/categoriesb.txt", header = FALSE, sep = "\t")
 vars <- vector("list",dim(cats)[1])
@@ -48,7 +48,7 @@ for(i in 1:n) {
 
 # a data.frame
 
-FULL <- SpatialPointsDataFrame(FULL.val[,c("Longitude (degrees)", "Latitude (degrees)")], FULL.val[,1:478])
+FULL <- SpatialPointsDataFrame(FULL.val[,c("Longitude (degrees)", "Latitude (degrees)")], FULL.val[,1:307])#this was changed for Sorg
 
 #########
 
