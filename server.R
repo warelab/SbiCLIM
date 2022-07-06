@@ -1,6 +1,6 @@
-library(shiny)
-library(shinyjs)
-library(shiny)
+library(shiny)#warning: many parts of this program are hardcoded 
+library(shinyjs) #if modifying the data/database, please be sure to check your data with
+library(shiny) #the sections of code starting at these line numbers: 64, 74, 80, 85, 93
 library(shinyjs)
 library(leaflet.extras)
 library(dplyr)
@@ -61,7 +61,7 @@ shinyServer(function(input, output) {
     print('coords')
     
     crds <- data.frame(coordinates(df))
-    leafletProxy('map')%>%fitBounds(lng1=min(crds[,1]),lng2=max(crds[,1]),
+    leafletProxy('map')%>%fitBounds(lng1=min(crds[,1]),lng2=max(crds[,1]),#please make sure the columns for longitude and latitude match here.
                                     lat1=min(crds[,2]),lat2=max(crds[,2]))
     
     crds
@@ -71,34 +71,34 @@ shinyServer(function(input, output) {
   output$yvar <- renderUI(selectInput('yvar',label='Environmental variable B',choices = datasets[['cats']], selected='SRTM 90m Digital Elevation Database v4.1 (m)'))
   output$xvar <- renderUI(selectInput('xvar',label='Environmental variable A (mapped)',choices = datasets[['cats']], selected='CERES Solar insolation spring (W/m2)'))
   
-  xVar <- reactive({
+  xVar <- reactive({#please be sure that these variables match your columns if you choose to modify the data
     print('xVar')
-    if(is.null(input$xvar)) return(names(df)[1])
+    if(is.null(input$xvar)) return(names(df)[1])#column 1 must be the longitude
     # xvar_ <<- input$xvar
     input$xvar})
   
   yVar <- reactive({
-    if(is.null(input$yvar)) return(names(df)[2])
+    if(is.null(input$yvar)) return(names(df)[2])#column 2 must be the latitude
     input$yvar})      
   
   
   IDVar <- reactive({
     print('ID')
-    if(is.null(input$color)) return(names(df)[3])
+    if(is.null(input$color)) return(names(df)[3])#column 3 must be your ID
     input$color})
   
   
   
-  
+  #dataframe of all of the points on the map, please check over the xVar and yVar to be sure they are correct
   ggvisdf <- reactive({
-    print('ggvesdf1')
+    print('ggvesdf1')#debug statement?
     df1 <- df@data
     gdf <- df1[, c(xVar(), yVar(), "Longitude (degrees)", "Latitude (degrees)")]
     print(gdf[1:5,])
     names(gdf) <- c("x", "y", "lng", "lat")
     gdf
   })  
-  
+  #sets the color of each of the dots on the map/graph
   colorData <- reactive({
     print(names(input))
     print('colData')
