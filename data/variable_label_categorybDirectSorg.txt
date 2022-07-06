@@ -1,6 +1,6 @@
-id	-	
 lng	Longitude (degrees)	Coordinates
 lat	Latitude (degrees)	Coordinates
+id	-	
 CO_Spring	MOPITT Carbon monoxide spring (ppbv)	Measurements_of_Pollution_In_The_Troposphere_(MOPITT)
 CO_Summer	MOPITT Carbon monoxide summer (ppbv)	Measurements_of_Pollution_In_The_Troposphere_(MOPITT)
 NO2_Spring	OMI Nitrogen dioxide spring (billion molecules/mm2)	Ozone_Monitoring_Instrument_(OMI)

@@ -23,13 +23,16 @@ library(htmltools)
 
 #SORGHUM_CLIMATES.csv
 readfile <- read.csv("data/SORGHUM_CLIMATES.csv",row.names = NULL)
+#readfile <- read.csv("data/AraCLIM_FINAL_CLIMools_V2.csv",row.names = NULL)
 readfile2 <- read.csv("data/datadescriptionc.csv",row.names = NULL)
 #AraCLIM_FINAL_CLIMools_V2
 FULL.val <-read.csv("data/SORGHUM_CLIMATES.csv")
+# FULL.val <- read.csv("data/AraCLIM_FINAL_CLIMools_V2.csv")
 class(FULL.val)  
 na.omit(FULL.val)
 #variable_label_categorybDirectSorg.txt
 vlc <- read.delim("data/variable_label_categorybDirectSorg.txt", header = FALSE, sep = "\t")
+#vlc <- read.delim("data/variable_label_categoryb.txt", header = FALSE, sep = "\t")
 colnames(FULL.val) <- vlc[,2]
 cats <- read.delim("data/categoriesb.txt", header = FALSE, sep = "\t")
 vars <- vector("list",dim(cats)[1])

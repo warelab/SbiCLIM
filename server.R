@@ -94,6 +94,7 @@ shinyServer(function(input, output) {
     print('ggvesdf1')
     df1 <- df@data
     gdf <- df1[, c(xVar(), yVar(), "Longitude (degrees)", "Latitude (degrees)")]
+    print(gdf[1:5,])
     names(gdf) <- c("x", "y", "lng", "lat")
     gdf
   })  
