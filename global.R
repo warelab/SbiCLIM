@@ -39,7 +39,7 @@ vlc <- read.delim("data/variable_label_categorybDirectSorg.txt", header = FALSE,
 
 colnames(FULL.val) <- vlc[,2]
 cats <- read.delim("data/categoriesb.txt", header = FALSE, sep = "\t")
-vars <- vector("list",dim(cats)[1])#hardcoded from lines 42 to 52
+vars <- vector("list",dim(cats)[1])
 names(vars) <- cats$V1
 n = dim(vlc)[1]
 for(i in 1:n) {

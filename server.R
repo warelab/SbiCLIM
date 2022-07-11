@@ -66,8 +66,8 @@ shinyServer(function(input, output) {
     
     crds
     
-  })
-  
+  })``
+  #these two lines are also hard coded in their selection of columns to use, so be careful that you have these columns.
   output$yvar <- renderUI(selectInput('yvar',label='Environmental variable B',choices = datasets[['cats']], selected='SRTM 90m Digital Elevation Database v4.1 (m)'))
   output$xvar <- renderUI(selectInput('xvar',label='Environmental variable A (mapped)',choices = datasets[['cats']], selected='CERES Solar insolation spring (W/m2)'))
   
@@ -313,14 +313,14 @@ shinyServer(function(input, output) {
 
       output$downloadData <- downloadHandler(
         filename = function() { 
-          paste("AraCLIM V2.0_", Sys.Date(), ".csv", sep="")
+          paste("sbiCLIM_v1", Sys.Date(), ".csv", sep="")
         },
         content = function(file) {
           write.csv(readfile, file)
         })
       output$downloadData2 <- downloadHandler(
         filename = function() { 
-          paste("AraCLIM V2.0_Environmental descriptors_", Sys.Date(), ".csv", sep="")
+          paste("SbiCLIM_Environmental descriptors_", Sys.Date(), ".csv", sep="")
         },
         content = function(file) {
           write.csv(readfile2, file)

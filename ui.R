@@ -8,6 +8,7 @@ library(shinycssloaders)
 
 # dataframe that holds usernames, passwords and other user data
 
+#this entire code is all one single method call
 shinyUI(fluidPage(
   # add logout button UI
   # div(class = "pull-right", shinyauthr::logoutUI(id = "logout")),
@@ -31,11 +32,11 @@ shinyUI(fluidPage(
     # Application title
     headerPanel(list(
       tags$head(tags$style("body {background-color: white; }")),
-      "AraCLIM V2.0",
+      "SbiCLIM V1.0",
       HTML(
         '<img src="picture2.png", height="100px",
         style="float:left"/>',
-        '<p style="color:green"> Defining the local environment of Arabidopsis </p>'
+        '<p style="color:green"> Defining the local environment of Sorghum </p>'
       )
     )),
     
@@ -59,7 +60,8 @@ shinyUI(fluidPage(
                             brewer.pal.info, category %in% c("seq", "div")
                           ))),
               uiOutput("ui")
-            ),
+            ), 
+            # twitter integration
             wellPanel(a(h4('Please cite us in any publication that utilizes information from Arabidopsis CLIMtools:'),  h6('-Ferrero‑Serrano,Á, Sylvia, MM, Forstmeier, PC, Olson, AJ, Ware, D,Bevilacqua, PC & Assmann, SM (2021). Experimental demonstration and pan‑structurome prediction of climate‑associated riboSNitches in Arabidopsis. Under review in Genome Biology.' ), h6('-Ferrero-Serrano, Á & Assmann SM. Phenotypic and genome-wide association with the local environment of Arabidopsis. Nature Ecology & Evolution. doi: 10.1038/s41559-018-0754-5 (2019)' ))),
             wellPanel(
               a("Tweets by @ClimTools", class = "twitter-timeline"
@@ -74,11 +76,7 @@ shinyUI(fluidPage(
           
           ###################################################
        ,
-       dashboardSidebar(
-         
-
-         
-       ),
+       dashboardSidebar(),
        dashboardBody(),
        
         mainPanel(
@@ -123,6 +121,7 @@ shinyUI(fluidPage(
         width = 12,
         div(DT::dataTableOutput("a"), style = "font-size: 75%; width: 75%")
       ))),
+      #about page
       tabPanel(
         title = "About",
         mainPanel(
@@ -147,7 +146,7 @@ shinyUI(fluidPage(
           ),
           h3(''),
           
-          
+          # pictures for sponsors/advertisements
           div(
             tags$a(img(src = 'shiny.png',  height = "100px"), href = "https://shiny.rstudio.com/"),
             tags$a(img(src = 'rstudio.png',  height =
