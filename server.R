@@ -66,7 +66,7 @@ shinyServer(function(input, output) {
     
     crds
     
-  })``
+  })
   #these two lines are also hard coded in their selection of columns to use, so be careful that you have these columns.
   output$yvar <- renderUI(selectInput('yvar',label='Environmental variable B',choices = datasets[['cats']], selected='SRTM 90m Digital Elevation Database v4.1 (m)'))
   output$xvar <- renderUI(selectInput('xvar',label='Environmental variable A (mapped)',choices = datasets[['cats']], selected='CERES Solar insolation spring (W/m2)'))
