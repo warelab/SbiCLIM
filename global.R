@@ -21,17 +21,23 @@ library(htmltools)
 #   name = c("reviewer", "User Two")
 # )
 
+#this is useless both of these are just downloads or something useless. ALready read in different dataframes why waste processing power ????
 #this is input of data files
 readfile <- read.csv("data/SORGHUM_CLIMATES.csv",row.names = NULL)
-
 #still unknown what the purpose of this is
 readfile2 <- read.csv("data/datadescriptionc.csv",row.names = NULL)
+
+
 
 #actual table that is used for plotting (I believe)
 FULL.val <-read.csv("data/SORGHUM_CLIMATES.csv")
 
+#debug?
 class(FULL.val)  
+
+#getting rid of NA
 na.omit(FULL.val)
+
 
 #reads in the category labels for each of the categories used in the input of the data files above
 #MUST MATCH FULL.val csv FILE IN ORDER EXACTLY, ANY DEVIATION WILL RESULT IN ERROR
