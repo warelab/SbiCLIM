@@ -43,6 +43,7 @@ na.omit(FULL.val)
 #MUST MATCH FULL.val csv FILE IN ORDER EXACTLY, ANY DEVIATION WILL RESULT IN ERROR
 vlc <- read.delim("data/variable_label_categorybDirectSorg.txt", header = FALSE, sep = "\t")
 
+#sets a new vars dataframe and categories dataframe
 colnames(FULL.val) <- vlc[,2]
 cats <- read.delim("data/categoriesb.txt", header = FALSE, sep = "\t")
 vars <- vector("list",dim(cats)[1])
@@ -70,6 +71,7 @@ FULL <- SpatialPointsDataFrame(FULL.val[,c("Longitude (degrees)", "Latitude (deg
 descriptiondataset <-read.csv("data/datadescriptionc.csv")
 
 #defined datasets for use in the server.R file
+#description dataset does not have a equals value?
 datasets <- list(
   'FULL'=  FULL,
 	'cats'= vars,

@@ -5,6 +5,8 @@ library(shinyjs)
 library(leaflet.extras)
 library(dplyr)
 
+
+#this entire code segment is one gigantic function call... Who designed this?
 shinyServer(function(input, output) {
   # credentials <- shinyauthr::loginServer(
   #   id = "login",
@@ -26,6 +28,8 @@ shinyServer(function(input, output) {
   #   credentials()$info
   # })
   
+  
+  #creates the map of the world in the app
   output$map <- renderLeaflet({
     print('render map')
     leaflet(FULL) %>% 
@@ -44,21 +48,22 @@ shinyServer(function(input, output) {
     
   })
   
-  
+  #creates a df variable that contains all the environmental data 
   df <- datasets[['FULL']]
   makeReactiveBinding('df')
   
+  #updates dataset used
   observeEvent(input$dataset,{
-    print('dataset')
+    print('dataset')#debug statement
     leafletProxy('map')%>%clearShapes()
     df <<- datasets[[input$dataset]]  
     i.active <<- NULL
     
   })
   
-  
+  # makes sure that the coordinates for the map are correct?
   coords <- reactive({
-    print('coords')
+    print('coords')#debug 
     
     crds <- data.frame(coordinates(df))
     leafletProxy('map')%>%fitBounds(lng1=min(crds[,1]),lng2=max(crds[,1]),#please make sure the columns for longitude and latitude match here.
@@ -67,6 +72,7 @@ shinyServer(function(input, output) {
     crds
     
   })
+  
   #these two lines are also hard coded in their selection of columns to use, so be careful that you have these columns.
   output$yvar <- renderUI(selectInput('yvar',label='Environmental variable B',choices = datasets[['cats']], selected='SRTM 90m Digital Elevation Database v4.1 (m)'))
   output$xvar <- renderUI(selectInput('xvar',label='Environmental variable A (mapped)',choices = datasets[['cats']], selected='CERES Solar insolation spring (W/m2)'))
@@ -98,10 +104,12 @@ shinyServer(function(input, output) {
     names(gdf) <- c("x", "y", "lng", "lat")
     gdf
   })  
+  
+  
   #sets the color of each of the dots on the map/graph
   colorData <- reactive({
     print(names(input))
-    print('colData')
+    print('colData')#debug
     df1 <- df@data
     df1[,xVar()]})
   colorpal <- reactive(colorNumeric(input$pal, colorData()))
@@ -109,10 +117,9 @@ shinyServer(function(input, output) {
   pal <- reactive({colorpal()(colorData())})
   
   
-  
+  #shows the map location information for a specific accession?
   observe({
-    
-    print('update map size/opa/color')
+    print('update map size/opa/color')#debug again? what is with these debug statements everywhere????
     x <- coords()[,1]
     y <- coords()[,2]
     leafletProxy('map')%>%
@@ -134,8 +141,9 @@ shinyServer(function(input, output) {
   
   
   
+  #shows the legend?
   observe({
-    print('legend')
+    print('legend')#to whoever wrote this code, please use comments and not sys out prints.
     leafletProxy("map")%>%
       clearControls() %>% 
       addLegend(opacity = 1,position = "bottomright",title = xVar(),
@@ -144,9 +152,9 @@ shinyServer(function(input, output) {
   })
   
   
+  #returns the map data as the mouse is hovering?
   mapData <- reactive({
-    print('mapdata')
-    
+    print('mapdata')#delete later
     mb <- input$map_bounds
     
     if(is.null(mb))
@@ -159,7 +167,7 @@ shinyServer(function(input, output) {
     
   })
   
-  
+  #adds a tool tip?
   tooltip <- function(x) {
     ggvisHover <<- x
     if(is.null(x)) return(NULL)
@@ -168,6 +176,7 @@ shinyServer(function(input, output) {
     tt
   }
   
+  #provides functionality to clicking on the tool tip?
   click_tooltip <- function(x) {
     point <- ggvisdf()[ggvisdf()$x == x$x & ggvisdf()$y == x$y, ]
     if(nrow(point) == 1) {
@@ -184,17 +193,19 @@ shinyServer(function(input, output) {
   }
   
   
+  #creates 2 reactive variables
   ggvisHover <- NULL
   makeReactiveBinding('ggvisHover')
   i.active <- NULL
   makeReactiveBinding('i.active')
   
-  
+  # detecting mouse hover over ggvis plot saves the data point hovered in i.active
   observeEvent(ggvisHover,{
     h <- ggvisHover[1:2]
     i.active <<- ggvisdf()[,'x']==h[[1]]&ggvisdf()[,'y']==h[[2]]
   })
   
+  #highlights each accession if the mouse is hovered over it
   observeEvent(input$map_marker_mouseover,{
     id <- as.numeric(input$map_marker_mouseover$id)
     if(!is.na(id)){
@@ -203,7 +214,7 @@ shinyServer(function(input, output) {
   })
   
   
-  
+  #if i.active is used then it adds red circles over the highlighted point/data 
   observeEvent(i.active,{
     leafletProxy('map') %>%
       removeMarker('hover') %>%
@@ -215,8 +226,8 @@ shinyServer(function(input, output) {
                        color = 'red',fill = FALSE) 
   })
   
+  # updating for mousing over graphs, makes sure tooltip for data value hovered is correct
   mouseOver <- reactive({
-    
     p <- ggvisdf()[i.active,c('x','y')]
     if(class(i.active)=='numeric'){tooltip(p)}
     p
@@ -310,7 +321,7 @@ shinyServer(function(input, output) {
       
 
       ####
-
+      ###download link functionality for downloading datasets used in this shiny app
       output$downloadData <- downloadHandler(
         filename = function() { 
           paste("sbiCLIM_v1", Sys.Date(), ".csv", sep="")
