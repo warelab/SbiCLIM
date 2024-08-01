@@ -23,7 +23,7 @@ library(htmltools)
 
 #this is useless both of these are just downloads or something useless. ALready read in different dataframes why waste processing power ????
 #this is input of data files
-readfile <- read.csv("data/SORGHUM_CLIMATES.csv",row.names = NULL)
+readfile <- read.csv("data/Sorghum_Climates_updated.csv",row.names = NULL)
 #still unknown what the purpose of this is
 readfile2 <- read.csv("data/datadescriptionc.csv",row.names = NULL)
 
